@@ -1,0 +1,32 @@
+# Ignorer les fichiers Ansible Vault (fichiers chiffrés)
+*vault*
+
+# Ignorer les fichiers INI
+*.ini
+
+# Ignorer les fichiers sensibles ou contenant des secrets
+vars.yml
+inventory.yml
+hosts.ini
+
+# Ignorer les fichiers temporaires et de cache
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+__pycache__/
+*.pyc
+
+# Ignorer les dossiers de build ou d'exécution
+ansible.retry
+.ansible/
+.cache/
+
+# Ignorer les fichiers générés par Docker
+docker-compose.yml
+*.env
+
+# Ignorer les clés SSH ou autres fichiers sensibles
+*.key
+*.pem

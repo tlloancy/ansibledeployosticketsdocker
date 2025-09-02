@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  osticket:
+    image: osticket/osticket:latest
+    container_name: osticket
+    ports:
+      - "{{ http_port }}:80"
+    environment:
+      - OSTICKET_DB_HOST=db
+      - OSTICKET_DB_NAME={{ db_name }}
+      - OSTICKET_DB_USER={{ db_user }}
+      - OSTICKET_DB_PASS={{ db_pass }}
+    volumes:
+      - osticket_data:/var/www/html
+    depends_on:
+      - db
+    networks:
+      - osticket_network
+
+  db:
+    image: mysql:8.0
+    container_name: osticket_db
+    environment:
+      - MYSQL_ROOT_PASSWORD={{ db_root_pass }}
+      - MYSQL_DATABASE={{ db_name }}
+      - MYSQL_USER={{ db_user }}
+      - MYSQL_PASSWORD={{ db_pass }}
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - osticket_network
+
+volumes:
+  osticket_data:
+  db_data:
+
+networks:
+  osticket_network:
+    driver: bridge

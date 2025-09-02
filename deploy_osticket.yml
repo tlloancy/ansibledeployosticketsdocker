@@ -1,0 +1,7 @@
+---
+- hosts: osticket_servers
+  become: true
+  vars_files:
+    - vars.yml
+  roles:
+    - osticket

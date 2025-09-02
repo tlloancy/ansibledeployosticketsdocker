@@ -1,0 +1,6 @@
+all:
+  hosts:
+    osticket_server:
+      ansible_host: support.deter-mi.net  # Remplacez par l'IP ou l'hôte si différent
+      ansible_user: root  # Remplacez par l'utilisateur SSH approprié
+      ansible_ssh_private_key_file: ~/.ssh/id_rsa  # Remplacez par le chemin de votre clé SSH

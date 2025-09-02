@@ -1,0 +1,8 @@
+domain_name: support.deter-mi.net
+http_port: 8080
+db_name: osticket
+db_user: osticket_user
+db_pass: secure_password
+db_root_pass: secure_root_password
+osticket_uid: 1000
+osticket_gid: 1000
