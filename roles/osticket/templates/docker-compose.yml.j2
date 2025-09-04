@@ -1,39 +1,46 @@
-version: '3.8'
 services:
   osticket:
-    image: osticket/osticket:latest
+    image: elestranobaron/osticket:latest
     container_name: osticket
     ports:
       - "{{ http_port }}:80"
     environment:
-      - OSTICKET_DB_HOST=db
-      - OSTICKET_DB_NAME={{ db_name }}
-      - OSTICKET_DB_USER={{ db_user }}
-      - OSTICKET_DB_PASS={{ db_pass }}
+      - MYSQL_HOST=db
+      - MYSQL_DATABASE=osticket
+      - MYSQL_USER={{ db_user }}
+      - MYSQL_PASSWORD={{ db_pass }}
+      - INSTALL_NAME=My Helpdesk
+      - ADMIN_EMAIL=admin@{{ domain_name }}
+      - ADMIN_USERNAME=ostadmin
+      - ADMIN_PASSWORD=Admin1
+      - INSTALL_SECRET=secure_install_secret
     volumes:
-      - osticket_data:/var/www/html
+      - /var/lib/osticket/osticket:/var/www/src
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - osticket_network
-
   db:
-    image: mysql:8.0
+    image: mysql:9.4
     container_name: osticket_db
+    ports:
+      - "{{ db_port }}:3306"
     environment:
       - MYSQL_ROOT_PASSWORD={{ db_root_pass }}
       - MYSQL_DATABASE={{ db_name }}
       - MYSQL_USER={{ db_user }}
       - MYSQL_PASSWORD={{ db_pass }}
     volumes:
-      - db_data:/var/lib/mysql
+      - /var/lib/osticket/mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "{{ db_user }}", "-p{{ db_pass }}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
     networks:
       - osticket_network
-
-volumes:
-  osticket_data:
-  db_data:
-
 networks:
   osticket_network:
     driver: bridge

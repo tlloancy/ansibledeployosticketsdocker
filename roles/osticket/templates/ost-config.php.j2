@@ -1,11 +1,10 @@
 <?php
 # Configuration file for osTicket
-define('OSTICKET_CONFIGFILE', '/var/www/html/include/ost-config.php');
-define('DBTYPE', 'mysql');
-define('DBHOST', 'db');
-define('DBNAME', '{{ db_name }}');
-define('DBUSER', '{{ db_user }}');
-define('DBPASS', '{{ db_pass }}');
-define('INSTALLED', true);
-define('PREFIX', 'ost_');
+if (!defined('DBTYPE')) define('DBTYPE', 'mysql');
+if (!defined('DBHOST')) define('DBHOST', 'db');
+if (!defined('DBNAME')) define('DBNAME', 'osticket');
+if (!defined('DBUSER')) define('DBUSER', '{{ db_user }}');
+if (!defined('DBPASS')) define('DBPASS', '{{ db_pass }}');
+if (!defined('INSTALLED')) define('INSTALLED', true);
+if (!defined('PREFIX')) define('PREFIX', 'ost_');
 ?>
